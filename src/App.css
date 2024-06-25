@@ -1,0 +1,52 @@
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+ .masthead {
+  width: 100%;
+  position: fixed;
+  z-index: 1100;
+  max-width: none;
+  background-color: #5a287d;
+  height: 200px;
+}
+
+.header-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.form {
+  padding-top: 300px;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+.nwb-logo {
+  margin-top: 24px;
+  margin-left: 24px;
+  height: 145px !important;
+  width: 144px !important;
+  background-size: cover !important;
+  background-image: url(../public/logo.svg) !important;
+}
+
