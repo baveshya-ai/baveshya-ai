@@ -15,6 +15,7 @@ export const App = () => {
           <LoginPage />
         </div>
       </div>
+      <span></span>
     </>
   );
 };
