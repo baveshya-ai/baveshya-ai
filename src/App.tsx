@@ -9,6 +9,7 @@ export const App = () => {
           <div className="header-container">
             {" "}
             <span role="img" tabIndex={-1} className="nwb-logo" />
+            <span className="title">Security Release</span>
           </div>
         </div>
         <div className="form">

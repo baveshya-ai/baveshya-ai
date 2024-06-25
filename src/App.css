@@ -33,7 +33,6 @@
 .header-container {
   width: 100%;
   display: flex;
-  justify-content: space-between;
   align-items: center;
 }
 .form {
@@ -49,4 +48,9 @@
   background-size: cover !important;
   background-image: url(../public/logo.svg) !important;
 }
-
+.title {
+  color: white;
+  font-size: 36px;
+  line-height: 24px;
+  padding-left: 16px;
+}
