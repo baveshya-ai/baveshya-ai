@@ -1,58 +1,77 @@
+import { useState } from "react";
+import { data } from "./mockData";
+
 export const LoginPage = () => {
+  const submitToModel = async () => {
+    let arr: any = [];
+    const [security, setSecurity] = useState([]);
+    try {
+      data.map(async (d) => {
+        const res = await fetch(
+          "https://securityapi.free.beeceptor.com/security",
+          {
+            method: "POST",
+            body: JSON.stringify(d),
+            headers: {
+              "Content-type": "application/json; charset=UTF-8",
+            },
+          }
+        );
+        const promise = res.json();
+        const result = await promise.then((d) => d[0]);
+        const securityData = { id: d.bin, release: result };
+        console.log(securityData);
+        arr.push(securityData);
+        setSecurity(arr);
+      });
+    } catch (erro) {
+      console.log(erro);
+    }
+  };
   return (
-    <table id="example" className="table table-striped">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Position</th>
-          <th>Office</th>
-          <th>Age</th>
-          <th>Start date</th>
-          <th>Salary</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Tiger Nixon</td>
-          <td>System Architect</td>
-          <td>Edinburgh</td>
-          <td>61</td>
-          <td>2011-04-25</td>
-          <td>$320,800</td>
-        </tr>
-        <tr>
-          <td>Garrett Winters</td>
-          <td>Accountant</td>
-          <td>Tokyo</td>
-          <td>63</td>
-          <td>2011-07-25</td>
-          <td>$170,750</td>
-        </tr>
-        <tr>
-          <td>Ashton Cox</td>
-          <td>Junior Technical Author</td>
-          <td>San Francisco</td>
-          <td>66</td>
-          <td>2009-01-12</td>
-          <td>$86,000</td>
-        </tr>
-        <tr>
-          <td>Cedric Kelly</td>
-          <td>Senior Javascript Developer</td>
-          <td>Edinburgh</td>
-          <td>22</td>
-          <td>2012-03-29</td>
-          <td>$433,060</td>
-        </tr>
-        <tr>
-          <td>Airi Satou</td>
-          <td>Accountant</td>
-          <td>Tokyo</td>
-          <td>33</td>
-          <td>2008-11-28</td>
-          <td>$162,700</td>
-        </tr>
-      </tbody>
-    </table>
+    <>
+      <table id="example" className="table table-striped">
+        <thead>
+          <tr>
+            <th>Brand</th>
+            <th>Sort Code</th>
+            <th>Account number</th>
+            <th>BIN</th>
+            <th>Account closure status</th>
+            <th>Account linked to sec in RMP status</th>
+            <th>Sec ID</th>
+            <th>Security linkage to other active borrowing status</th>
+            <th>Linked borrowing Repayment status</th>
+            <th>Type</th>
+          </tr>
+        </thead>
+        <tbody>
+          {data.map((d, i) => (
+            <tr key={i}>
+              <td>{d.brand}</td>
+              <td>{d.sortCode}</td>
+              <td>{d.accountNumber}</td>
+              <td>{d.bin}</td>
+              <td>{d.isAccountClosed === 0 ? "No" : "Yes"}</td>
+              <td>{d.isAccountLinkedToRmp === 0 ? "No" : "Yes"}</td>
+              <td>{d.secId}</td>
+              <td>{d.isAccountLinkedToBorrowing === 0 ? "No" : "Yes"}</td>
+              <td>{d.isBorrowingRepaid === 0 ? "No" : "Yes"}</td>
+              <td>{d.accType}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <div>
+        <button
+          type="button"
+          className="btn btn-secondary"
+          onClick={submitToModel}
+          data-mdb-ripple-init
+        >
+          Submit
+        </button>
+      </div>
+    </>
   );
 };
