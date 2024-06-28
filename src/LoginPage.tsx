@@ -1,5 +1,4 @@
 import { data } from "./mockData";
-import { EmailPage } from "./EmailPage";
 import { useEffect } from "react";
 import emailjs from "@emailjs/browser";
 
@@ -8,21 +7,32 @@ export const LoginPage = () => {
     let arr: any = [];
     try {
       data.map(async (d) => {
+        const payload = [
+          d.isAccountClosed,
+          d.isAccountLinkedToRmp,
+          d.isAccountLinkedToBorrowing,
+          d.isBorrowingRepaid,
+          d.accType,
+          d.brand[0].toFixed(1),
+          d.brand[1].toFixed(1),
+        ];
         const res = await fetch(
           "https://mlaiserver.free.beeceptor.com/status",
           {
             method: "POST",
-            body: JSON.stringify(d),
+            body: JSON.stringify(payload),
             headers: {
               "Content-type": "application/json; charset=UTF-8",
             },
           }
         );
         const promise = res.json();
-        const result = await promise.then((d) => d.predict);
+        const result = await promise.then((d) => d.prediction);
         const securityData = { id: d.bin, release: result };
         arr.push(securityData);
         console.log(arr);
+        arr.map((a: any, index: any) => sessionStorage.setItem(index, a.id));
+
         sendEmail();
       });
     } catch (erro) {
@@ -35,7 +45,7 @@ export const LoginPage = () => {
   var templateParams = {
     from_name: "Security",
     to_name: "RM 1",
-    message: "http://localhost:5173/",
+    message: "http:localhost:5173",
   };
   const sendEmail = () => {
     emailjs.send(serviceId, templateId, templateParams).then(
@@ -47,6 +57,7 @@ export const LoginPage = () => {
       }
     );
   };
+  const NWB = [1.0, 0.0];
   return (
     <>
       <table id="example" className="table table-striped">
@@ -67,16 +78,24 @@ export const LoginPage = () => {
         <tbody>
           {data.map((d, i) => (
             <tr key={i}>
-              <td>{d.brand}</td>
+              <td>
+                {JSON.stringify(d.brand) === JSON.stringify(NWB)
+                  ? "NWB"
+                  : "RSB"}
+              </td>
               <td>{d.sortCode}</td>
               <td>{d.accountNumber}</td>
               <td>{d.bin}</td>
-              <td>{d.isAccountClosed === 0 ? "No" : "Yes"}</td>
+              <td>{d.isAccountClosed === 0 ? "Yes" : "No"}</td>
               <td>{d.isAccountLinkedToRmp === 0 ? "No" : "Yes"}</td>
               <td>{d.secId}</td>
               <td>{d.isAccountLinkedToBorrowing === 0 ? "No" : "Yes"}</td>
               <td>{d.isBorrowingRepaid === 0 ? "No" : "Yes"}</td>
-              <td>{d.accType}</td>
+              <td>
+                {d.accType === 3
+                  ? "Prop/Deb/Misc/Agri"
+                  : "GTEE/LifePolicy/Boats/Charge on cash/Steps on Rights"}
+              </td>
             </tr>
           ))}
         </tbody>
@@ -91,7 +110,6 @@ export const LoginPage = () => {
           Submit
         </button>
       </div>
-      {/* <EmailPage /> */}
     </>
   );
 };

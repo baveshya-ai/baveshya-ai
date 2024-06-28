@@ -1,6 +1,6 @@
 export const data = [
     {
-        brand: "NMB",
+        brand: [1.0,0.0], //NMB
         sortCode: 140240,
         accountNumber: 4540368,
         bin: 1918546445,
@@ -8,11 +8,11 @@ export const data = [
         isAccountLinkedToRmp: 1,
         secId: 6546528,
         isAccountLinkedToBorrowing: 0,
-        isBorrowingRepaid: 1,
-        accType: "Prop/Deb/Misc/Agri",
+        isBorrowingRepaid: 3,
+        accType: 3,
     },
     {
-        brand: "RSB",
+        brand: [0.0, 1.0], //RSB
         sortCode: 174288,
         accountNumber: 4486653,
         bin: 1087075806,
@@ -20,11 +20,11 @@ export const data = [
         isAccountLinkedToRmp: 1,
         secId: 1469053,
         isAccountLinkedToBorrowing: 0,
-        isBorrowingRepaid: 1,
-        accType: "GTEE/LifePolicy/Boats/Charge on cash/Steps on Rights",
+        isBorrowingRepaid: 3,
+        accType: 2,
     },
     {
-        brand: "RSB",
+        brand: [0.0, 1.0], //RSB
         sortCode: 389149,
         accountNumber: 22048972,
         bin: 1604312446,
@@ -32,7 +32,7 @@ export const data = [
         isAccountLinkedToRmp: 1,
         secId: 1642924,
         isAccountLinkedToBorrowing: 1,
-        isBorrowingRepaid: 1,
-        accType: "Prop/Deb/Misc/Agri",
+        isBorrowingRepaid: 3,
+        accType: 3,
     },
 ]

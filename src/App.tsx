@@ -1,5 +1,7 @@
 import "./App.css";
 import { LoginPage } from "./LoginPage";
+import { Route, Routes, BrowserRouter } from "react-router-dom";
+import { RmReview } from "./RmReview";
 
 export const App = () => {
   return (
@@ -13,7 +15,12 @@ export const App = () => {
           </div>
         </div>
         <div className="form">
-          <LoginPage />
+          <BrowserRouter>
+            <Routes>
+              <Route path="/review/:id" element={<RmReview />}></Route>
+              <Route path="/" element={<LoginPage />}></Route>
+            </Routes>
+          </BrowserRouter>
         </div>
       </div>
     </>
