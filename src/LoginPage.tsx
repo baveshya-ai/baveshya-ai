@@ -1,14 +1,15 @@
-import { useState } from "react";
 import { data } from "./mockData";
+import { EmailPage } from "./EmailPage";
+import { useEffect } from "react";
+import emailjs from "@emailjs/browser";
 
 export const LoginPage = () => {
   const submitToModel = async () => {
     let arr: any = [];
-    const [security, setSecurity] = useState([]);
     try {
       data.map(async (d) => {
         const res = await fetch(
-          "https://securityapi.free.beeceptor.com/security",
+          "https://mlaiserver.free.beeceptor.com/status",
           {
             method: "POST",
             body: JSON.stringify(d),
@@ -18,15 +19,33 @@ export const LoginPage = () => {
           }
         );
         const promise = res.json();
-        const result = await promise.then((d) => d[0]);
+        const result = await promise.then((d) => d.predict);
         const securityData = { id: d.bin, release: result };
-        console.log(securityData);
         arr.push(securityData);
-        setSecurity(arr);
+        console.log(arr);
+        sendEmail();
       });
     } catch (erro) {
       console.log(erro);
     }
+  };
+  useEffect(() => emailjs.init("iA9GMH_4_xuwY2HtJ"), []);
+  const serviceId = "service_asdriw4";
+  const templateId = "template_qc6o38i";
+  var templateParams = {
+    from_name: "Security",
+    to_name: "RM 1",
+    message: "http://localhost:5173/",
+  };
+  const sendEmail = () => {
+    emailjs.send(serviceId, templateId, templateParams).then(
+      (response) => {
+        console.log("SUCCESS!", response.status, response.text);
+      },
+      (error) => {
+        console.log("FAILED...", error);
+      }
+    );
   };
   return (
     <>
@@ -72,6 +91,7 @@ export const LoginPage = () => {
           Submit
         </button>
       </div>
+      {/* <EmailPage /> */}
     </>
   );
 };
