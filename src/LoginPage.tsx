@@ -4,7 +4,7 @@ import emailjs from "@emailjs/browser";
 
 export const LoginPage = () => {
   const submitToModel = async () => {
-    let arr: any = [];
+    let array: any = [];
     try {
       data.map(async (d) => {
         const payload = [
@@ -17,7 +17,7 @@ export const LoginPage = () => {
           d.brand[1].toFixed(1),
         ];
         const res = await fetch(
-          "https://mlaiserver.free.beeceptor.com/status",
+          "https://ml-ai-bave.free.beeceptor.com/status",
           {
             method: "POST",
             body: JSON.stringify(payload),
@@ -28,10 +28,12 @@ export const LoginPage = () => {
         );
         const promise = res.json();
         const result = await promise.then((d) => d.prediction);
-        const securityData = { id: d.bin, release: result };
-        arr.push(securityData);
-        console.log(arr);
-        arr.map((a: any, index: any) => sessionStorage.setItem(index, a.id));
+        const securityData = { id: d.secId, release: result };
+        array.push(securityData);
+        console.log(array);
+        array.map((a: any, index: any) =>
+          a.prediction === 1 ? sessionStorage.setItem(index, a.id) : null
+        );
 
         sendEmail();
       });
@@ -42,12 +44,11 @@ export const LoginPage = () => {
   useEffect(() => emailjs.init("iA9GMH_4_xuwY2HtJ"), []);
   const serviceId = "service_asdriw4";
   const templateId = "template_qc6o38i";
-  var templateParams = {
-    from_name: "Security",
-    to_name: "RM 1",
-    message: "http:localhost:5173",
-  };
   const sendEmail = () => {
+    var templateParams = {
+      securityId: "6546528",
+      message: "http:localhost:5173/review/6546528",
+    };
     emailjs.send(serviceId, templateId, templateParams).then(
       (response) => {
         console.log("SUCCESS!", response.status, response.text);

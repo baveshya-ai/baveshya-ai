@@ -54,3 +54,14 @@
   line-height: 24px;
   padding-left: 16px;
 }
+.flex {
+  display: flex;
+  margin-top: 24px;
+}
+.decision {
+  margin-left: 24px;
+}
+.text {
+  margin-top: 24px;
+  
+}
